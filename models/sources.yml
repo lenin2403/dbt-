@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: earthquake_raw
+    database: mindful-bivouac-481316-q7
+    schema: earthquake
+    description: Raw earthquake data loaded into BigQuery from static CSV and real-time USGS API.
+
+    tables:
+      - name: static_earthquake_data
+        description: Cleaned static earthquake data loaded from USGS CSV using Spark.
+        columns:
+          - name: earthquake_id
+            description: Unique earthquake event ID.
+            tests:
+              - not_null
+              - unique
+          - name: event_time
+            description: Time when the earthquake occurred.
+            tests:
+              - not_null
+          - name: latitude
+            tests:
+              - not_null
+          - name: longitude
+            tests:
+              - not_null
+          - name: magnitude
+            tests:
+              - not_null
+
+      - name: realtime_earthquake_data
+        description: Real-time earthquake data loaded from USGS GeoJSON API using Cloud Run and Cloud Scheduler.
+        columns:
+          - name: earthquake_id
+            description: Unique earthquake event ID from USGS.
+            tests:
+              - not_null
+          - name: event_time
+            description: Time when the earthquake occurred.
+            tests:
+              - not_null
+          - name: ingested_at
+            description: Timestamp when the record was inserted into BigQuery.
+            tests:
+              - not_null
