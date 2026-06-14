@@ -44,3 +44,34 @@ sources:
             description: Timestamp when the record was inserted into BigQuery.
             tests:
               - not_null
+
+      - name: tectonic_plate_boundaries
+        description: Tectonic plate boundary data loaded from public GeoJSON source.
+        columns:
+          - name: boundary_id
+            description: Unique tectonic plate boundary ID.
+            tests:
+              - not_null
+              - unique
+
+          - name: boundary_name
+            description: Tectonic plate boundary name or plate code.
+
+          - name: boundary_type
+            description: Type of tectonic plate boundary.
+
+          - name: geometry_type
+            description: Geometry type from the GeoJSON file.
+
+          - name: boundary_wkt
+            description: Plate boundary geometry stored as WKT text.
+            tests:
+              - not_null
+
+          - name: source_url
+            description: Source URL of the tectonic plate boundary data.
+
+          - name: ingested_at
+            description: Timestamp when the tectonic plate boundary data was loaded.
+            tests:
+              - not_null
